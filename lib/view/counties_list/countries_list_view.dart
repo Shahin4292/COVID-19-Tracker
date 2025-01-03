@@ -39,6 +39,37 @@ class _CountriesListViewState extends State<CountriesListView> {
                     hintStyle: const TextStyle(color: Colors.white),
                     hintText: 'Search with countries name'),
               ),
+              Expanded(
+                  child: FutureBuilder(
+                future: covid19service.getCovidCountriesApi(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: Text('Loading'));
+                  } else {
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            subtitle: Text(
+                              snapshot.data![index]['cases'].toString(),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            leading: Image(
+                              height: 50,
+                              width: 50,
+                              image: NetworkImage(
+                                  snapshot.data![index]['countryInfo']['flag'].toString()),
+                            ),
+                            title: Text(
+                              snapshot.data![index]['country'].toString(),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          );
+                        });
+                  }
+                },
+              )),
             ],
           ),
         ),
