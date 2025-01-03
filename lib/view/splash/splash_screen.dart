@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:covid_19/view/home_screen.dart';
+import 'package:covid_19/view/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
