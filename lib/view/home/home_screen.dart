@@ -1,3 +1,4 @@
+import 'package:covid_19/view/home/widget/reusable_row.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: Colors.grey.shade800,
       body: SafeArea(
@@ -39,51 +41,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 chartType: ChartType.ring,
                 colorList: colorList,
               ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
               ReusableRow(
                 title: 'Total',
                 value: '200',
               ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      fixedSize: Size(size.width, size.height * 0.055)),
+                  onPressed: () {},
+                  child: const Text(
+                    textAlign: TextAlign.center,
+                    "Track Countries",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Colors.white),
+                  ))
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ReusableRow extends StatelessWidget {
-  String title, value;
-
-  ReusableRow({
-    super.key,
-    required this.title,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.sizeOf(context).height * 0.055,
-      width: MediaQuery.sizeOf(context).width,
-      padding: const EdgeInsets.only(right: 8, left: 8),
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
-          ),
-          Text(
-            value,
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
-          ),
-        ],
       ),
     );
   }
