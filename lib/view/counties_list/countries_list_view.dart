@@ -1,8 +1,8 @@
+import 'package:covid_19/view/counties_list/widget/simmer_effect.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../viewModel/service/covid_19_service.dart';
+import '../details_view/details_view.dart';
 
 class CountriesListView extends StatefulWidget {
   const CountriesListView({super.key});
@@ -51,26 +51,7 @@ class _CountriesListViewState extends State<CountriesListView> {
                   return ListView.builder(
                       itemCount: 10,
                       itemBuilder: (context, index) {
-                        return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade700,
-                            highlightColor: Colors.grey.shade100,
-                            child: ListTile(
-                              subtitle: Container(
-                                height: 10,
-                                width: 80,
-                                color: Colors.white,
-                              ),
-                              leading: Container(
-                                height: 50,
-                                width: 50,
-                                color: Colors.white,
-                              ),
-                              title: Container(
-                                height: 10,
-                                width: 80,
-                                color: Colors.white,
-                              ),
-                            ));
+                        return const SimmerEffect();
                       });
                 } else {
                   return ListView.builder(
@@ -78,21 +59,48 @@ class _CountriesListViewState extends State<CountriesListView> {
                       itemBuilder: (context, index) {
                         String name = snapshot.data![index]['country'];
                         if (searchController.text.isEmpty) {
-                          return ListTile(
-                            subtitle: Text(
-                              snapshot.data![index]['cases'].toString(),
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            leading: Image(
-                              height: 50,
-                              width: 50,
-                              image: NetworkImage(snapshot.data![index]
-                                      ['countryInfo']['flag']
-                                  .toString()),
-                            ),
-                            title: Text(
-                              snapshot.data![index]['country'].toString(),
-                              style: const TextStyle(color: Colors.white),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DetailsView(
+                                            image: snapshot.data![index]
+                                                ['countryInfo']['flag'],
+                                            name: snapshot.data![index]
+                                                ['country'],
+                                            totalCases: snapshot.data![index]
+                                                ['cases'],
+                                            totalRecovered: snapshot
+                                                .data![index]['recovered'],
+                                            totalDeaths: snapshot.data![index]
+                                                ['deaths'],
+                                            active: snapshot.data![index]
+                                                ['active'],
+                                            test: snapshot.data![index]
+                                                ['tests'],
+                                            todayRecovered: snapshot
+                                                .data![index]['todayRecovered'],
+                                            critical: snapshot.data![index]
+                                                ['critical'],
+                                          )));
+                            },
+                            child: ListTile(
+                              subtitle: Text(
+                                snapshot.data![index]['cases'].toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              leading: Image(
+                                height: 50,
+                                width: 50,
+                                image: NetworkImage(snapshot.data![index]
+                                        ['countryInfo']['flag']
+                                    .toString()),
+                              ),
+                              title: Text(
+                                snapshot.data![index]['country'].toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             ),
                           );
                         } else if (name

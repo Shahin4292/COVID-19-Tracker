@@ -1,3 +1,4 @@
+import 'package:covid_19/view/counties_list/countries_list_view.dart';
 import 'package:covid_19/view/home/home_screen.dart';
 import 'package:covid_19/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const CountriesListView(),
     );
   }
 }

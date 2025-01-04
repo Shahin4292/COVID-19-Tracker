@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:covid_19/view/counties_list/countries_list_view.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -17,7 +17,12 @@ class RoundedButton extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             fixedSize: Size(size.width, size.height * 0.055)),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CountriesListView()));
+        },
         child: const Text(
           textAlign: TextAlign.center,
           "Track Countries",

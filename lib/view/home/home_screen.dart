@@ -6,7 +6,7 @@ import 'package:pie_chart/pie_chart.dart';
 
 import '../../model/covid_model.dart';
 import '../../res/colors/app_color.dart';
-import '../../service/covid_19_service.dart';
+import '../../viewModel/service/covid_19_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
