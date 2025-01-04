@@ -1,5 +1,6 @@
 import 'package:covid_19/view/counties_list/widget/simmer_effect.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../viewModel/service/covid_19_service.dart';
 import '../details_view/details_view.dart';
@@ -12,8 +13,7 @@ class CountriesListView extends StatefulWidget {
 }
 
 class _CountriesListViewState extends State<CountriesListView> {
-  TextEditingController searchController = TextEditingController();
-  Covid19Service covid19service = Covid19Service();
+  Covid19Service covid19service = Get.put(Covid19Service());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _CountriesListViewState extends State<CountriesListView> {
                   setState(() {});
                 },
                 style: const TextStyle(color: Colors.white),
-                controller: searchController,
+                controller: covid19service.searchController,
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     border: OutlineInputBorder(
@@ -58,7 +58,7 @@ class _CountriesListViewState extends State<CountriesListView> {
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         String name = snapshot.data![index]['country'];
-                        if (searchController.text.isEmpty) {
+                        if (covid19service.searchController.text.isEmpty) {
                           return InkWell(
                             onTap: () {
                               Navigator.push(
@@ -103,9 +103,9 @@ class _CountriesListViewState extends State<CountriesListView> {
                               ),
                             ),
                           );
-                        } else if (name
-                            .toLowerCase()
-                            .contains(searchController.text.toLowerCase())) {
+                        } else if (name.toLowerCase().contains(covid19service
+                            .searchController.text
+                            .toLowerCase())) {
                           return InkWell(
                             onTap: () {
                               Navigator.push(

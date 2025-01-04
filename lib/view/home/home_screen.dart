@@ -2,6 +2,7 @@ import 'package:covid_19/view/home/widget/reusable_row.dart';
 import 'package:covid_19/view/home/widget/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../model/covid_model.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     vsync: this,
   )..repeat();
 
-  Covid19Service covid19service = Covid19Service();
+  Covid19Service covid19service = Get.put(Covid19Service());
 
   @override
   Widget build(BuildContext context) {

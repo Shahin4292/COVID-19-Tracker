@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:covid_19/res/app_url/app_url.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/covid_model.dart';
 
-class Covid19Service {
+class Covid19Service extends GetxController {
   // List<CovidCountriesModel> countriesList = [];
+
+  TextEditingController searchController = TextEditingController();
 
   Future<CovidModel?> getCovidApi() async {
     final response = await http.get(Uri.parse(AppUrl.covid19Api));
