@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:covid_19/res/app_url/app_url.dart';
 import 'package:http/http.dart' as http;
 
-import '../../model/covid_countries_model.dart';
 import '../../model/covid_model.dart';
 
 class Covid19Service {

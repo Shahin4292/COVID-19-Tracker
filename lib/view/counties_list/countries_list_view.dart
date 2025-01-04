@@ -21,7 +21,7 @@ class _CountriesListViewState extends State<CountriesListView> {
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Column(
