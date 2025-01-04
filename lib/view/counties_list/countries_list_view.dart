@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../viewModel/service/covid_19_service.dart';
 
@@ -22,34 +24,60 @@ class _CountriesListViewState extends State<CountriesListView> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {});
+                },
                 style: const TextStyle(color: Colors.white),
                 controller: searchController,
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     border: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(width: 3, color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     hintStyle: const TextStyle(color: Colors.white),
                     hintText: 'Search with countries name'),
               ),
-              Expanded(
-                  child: FutureBuilder(
-                future: covid19service.getCovidCountriesApi(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: Text('Loading'));
-                  } else {
-                    return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
+            ),
+            Expanded(
+                child: FutureBuilder(
+              future: covid19service.getCovidCountriesApi(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (!snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Shimmer.fromColors(
+                            baseColor: Colors.grey.shade700,
+                            highlightColor: Colors.grey.shade100,
+                            child: ListTile(
+                              subtitle: Container(
+                                height: 10,
+                                width: 80,
+                                color: Colors.white,
+                              ),
+                              leading: Container(
+                                height: 50,
+                                width: 50,
+                                color: Colors.white,
+                              ),
+                              title: Container(
+                                height: 10,
+                                width: 80,
+                                color: Colors.white,
+                              ),
+                            ));
+                      });
+                } else {
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        String name = snapshot.data![index]['country'];
+                        if (searchController.text.isEmpty) {
                           return ListTile(
                             subtitle: Text(
                               snapshot.data![index]['cases'].toString(),
@@ -58,20 +86,43 @@ class _CountriesListViewState extends State<CountriesListView> {
                             leading: Image(
                               height: 50,
                               width: 50,
-                              image: NetworkImage(
-                                  snapshot.data![index]['countryInfo']['flag'].toString()),
+                              image: NetworkImage(snapshot.data![index]
+                                      ['countryInfo']['flag']
+                                  .toString()),
                             ),
                             title: Text(
                               snapshot.data![index]['country'].toString(),
                               style: const TextStyle(color: Colors.white),
                             ),
                           );
-                        });
-                  }
-                },
-              )),
-            ],
-          ),
+                        } else if (name
+                            .toLowerCase()
+                            .contains(searchController.text.toLowerCase())) {
+                          return ListTile(
+                            subtitle: Text(
+                              snapshot.data![index]['cases'].toString(),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            leading: Image(
+                              height: 50,
+                              width: 50,
+                              image: NetworkImage(snapshot.data![index]
+                                      ['countryInfo']['flag']
+                                  .toString()),
+                            ),
+                            title: Text(
+                              snapshot.data![index]['country'].toString(),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      });
+                }
+              },
+            )),
+          ],
         ),
       ),
     );
